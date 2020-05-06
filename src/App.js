@@ -3,6 +3,7 @@ import React, {
 } from "react";
 import Navbar from "./components/layout/Navbar";
 import Users from "./components/users/Users";
+import SearchBox from "./components/users/SearchBox";
 import axios from 'axios';
 import "./App.css";
 
@@ -11,13 +12,26 @@ class App extends Component {
     loading: false,
     users: []
   }
-  async componentDidMount() {
+
+  // async componentDidMount() {
+  //   this.setState({
+  //     loading: true
+  //   });
+  //   const resolve = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+  //   this.setState({
+  //     users: resolve.data,
+  //     loading: false
+  //   });
+  // }
+
+
+  
+  //Search GitHub Users
+  searchUser = async text => {
+    this.setState({loading : true});
+    const resolve = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
     this.setState({
-      loading: true
-    });
-    const resolve = await axios.get('https://api.github.com/users');
-    this.setState({
-      users: resolve.data,
+      users: resolve.data.items,
       loading: false
     });
   }
@@ -28,13 +42,15 @@ class App extends Component {
       Navbar / >
 
       <div className = 'container' >
-      <Users loading = {
-        this.state.loading
-      }
-      users = {
-        this.state.users
-      }
-      /> 
+
+        <SearchBox searchUser={this.searchUser}/>
+        <Users loading = {
+          this.state.loading
+        }
+        users = {
+          this.state.users
+        }
+        /> 
       </div> 
     </div>
     );
