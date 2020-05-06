@@ -1,0 +1,7 @@
+{
+  "prettier.jsxSingleQuote": true,
+  "javascript.implicitProjectConfig.checkJs": true,
+  "javascript.implicitProjectConfig.experimentalDecorators": true,
+  "editor.fontSize": 18,
+  "editor.fontLigatures": null
+}
