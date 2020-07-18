@@ -30,7 +30,7 @@ export class SearchBox extends Component{
         return(
             <div>
                 <form onSubmit={this.onSubmit} className="form">
-                <div className="form-group mt-3">
+                <div className="form-group mt-5">
                     <input type="text" name='text' className="form-control" id="inputAddress" placeholder="Search Users..." value={this.state.text} onChange={this.onChange}/>
                     <input type="submit" className="btn btn-dark btn-block mt-2" value="Search" />
                 </div>

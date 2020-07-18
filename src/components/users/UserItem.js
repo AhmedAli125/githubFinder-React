@@ -8,15 +8,15 @@ const UserItem = ({ user: { login, avatar_url, html_url } }) => {
       style={{
         margin: "5px",
         border: "1px solid",
-        height: "25rem",
-        width: "22rem",
+        height: "auto",
+        width: "auto",
       }}
     >
       <img
         className='container-fluid pt-4'
         src={avatar_url}
         alt='userImage'
-        style={{ height: "17rem", width: "20rem" }}
+        style={{ height: "80%", width: "100%" }}
       />
       <div className='card-body'>
         <h5 className='card-title text-center'>{login}</h5>
