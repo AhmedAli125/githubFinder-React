@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const Navbar = ({ icon, title }) => {
   return (
     <div>
-      <nav className='navbar bg-dark text-light fixed-top p-1'>
+      <nav className='navbar bg-dark text-light fixed-top'>
         <h1 className="navbar-brand">
           <i className={icon} /> {title}
         </h1>

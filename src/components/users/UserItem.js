@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 
 const UserItem = ({ user: { login, avatar_url, html_url } }) => {
@@ -20,13 +21,9 @@ const UserItem = ({ user: { login, avatar_url, html_url } }) => {
       />
       <div className='card-body'>
         <h5 className='card-title text-center'>{login}</h5>
-        <a
-          href={html_url}
-          className='btn btn-dark d-flex justify-content-center'
-          target='_blank'
-        >
+        <Link to = {`/user/${login}`} className='btn btn-dark d-flex justify-content-center'>
           Click Here
-        </a>
+        </Link>
       </div>
     </div>
   );
