@@ -1,19 +1,23 @@
 import React, { Fragment, Component } from 'react';
 import Spinner from '../layout/Spinner';
+import Repo from '../repos/Repos';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export class User extends Component {
     componentDidMount(){
         this.props.getUser(this.props.match.params.login);
+        this.props.getUserRepos(this.props.match.params.login);
     }
-
+    
     static propTypes = {
         loading : PropTypes.bool,
         user : PropTypes.object.isRequired,
         getUser:PropTypes.func.isRequired,
+        getUserRepos:PropTypes.func.isRequired,
+        repos: PropTypes.array.isRequired
     };
-
+    
     render() {
         const {
             name,
@@ -27,26 +31,25 @@ export class User extends Component {
             followers,
             following,
             public_repos,
-            public_gist,
+            public_gists,
             hireable
         } = this.props.user;
-
-        const { loading } = this.props;
-
+        const { loading, repos } = this.props;
+        
         if(loading) 
-            return <Spinner />
+        return <Spinner />
         else
-            return (
-                <div className="pt-5">
+        return (
+            <div className="pt-5">
                     <Link to = '/' className = 'btn btn-secondary mr-3'>
                         Return
                     </Link>
                     Hireable : { '' }
                     {hireable ? (
                         <i className='fas fa-check text-success' />
-                    ) : (
-                        <i className='fas fa-times-circle text-danger' />
-                    )}
+                        ) : (
+                            <i className='fas fa-times-circle text-danger' />
+                            )}
 
                     <div className='container mt-2'>
                         <div className='row'>
@@ -107,8 +110,11 @@ export class User extends Component {
                                     <span className="badge badge-info">Public Repos : {public_repos}</span>
                         </div>
                         <div className='col-md-2'>
-                                    <span className="badge badge-light">Public Gist : {public_gist}</span>
+                                    <span className="badge badge-light">Public Gist : {public_gists}</span>
                         </div>
+                    </div>
+                    <div className='row m-3 border p-5 p-auto'>
+                        <Repo repos={repos} /> 
                     </div>
                 </div>
             )
