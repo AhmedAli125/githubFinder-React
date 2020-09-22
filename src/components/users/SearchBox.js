@@ -1,45 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types'
+import GithubContext from '../../context/github/githubContext';
 
-export class SearchBox extends Component{
-    state = {
-        text : ''
-    };
+const SearchBox = ({ setAlert }) => {
+    const githubContext = useContext(GithubContext); 
+    const [ text, setText ] = useState('');
 
-    static propTypes = {
-        searchUser : PropTypes.func.isRequired,
-        clearUsers : PropTypes.func.isRequired,
-        showClear : PropTypes.bool.isRequired,
-        setAlert : PropTypes.func.isRequired
-    };
-
-    onChange = e => this.setState({ [e.target.name] : e.target.value });
+    const onChange = e => setText(e.target.value);
     
-    onSubmit = e => {
+    const onSubmit = e => {
         e.preventDefault();
-        if(this.state.text === ''){
-            this.props.setAlert(true);
+        if(text === ''){
+            setAlert(true);
         } else {
-            this.props.searchUser( this.state.text );
-            this.setState( {text : ''} );
+            githubContext.searchUser( text );
+            setText('');
         }
     }
-    render(){
-        const { clearUsers, showClear } = this.props;
-
         return(
             <div>
-                <form onSubmit={this.onSubmit} className="form">
+                <form onSubmit={onSubmit} className="form">
                 <div className="form-group mt-5">
-                    <input type="text" name='text' className="form-control" id="inputAddress" placeholder="Search Users..." value={this.state.text} onChange={this.onChange}/>
+                    <input type="text" name='text' className="form-control" id="inputAddress" placeholder="Search Users..." value={text} onChange={onChange}/>
                     <input type="submit" className="btn btn-dark btn-block mt-2" value="Search" />
                 </div>
             </form>
             {
-                showClear && <button className='btn btn-primary btn-block' onClick={clearUsers}>Clear</button>
+                githubContext.users.length > 0 && <button className='btn btn-primary btn-block' onClick={githubContext.clearUsers}>Clear</button>
             }
             </div>
         );
     }
-}
+SearchBox.propTypes = {
+    setAlert : PropTypes.func.isRequired
+};
 export default SearchBox;
